@@ -23,13 +23,10 @@ mod hot {
         let _ = watcher.watch(root);
 
         for event in wrx.iter() {
-          match event {
-            notify::Event { path: Some(path), op: Ok(notify::op::WRITE) } => {
-              if let Some(sx) = receivers_.lock().unwrap().get(&path) {
-                sx.send(()).unwrap();
-              }
-            },
-            _ => {}
+          if let notify::Event { path: Some(path), op: Ok(notify::op::WRITE) } = event {
+            if let Some(sx) = receivers_.lock().unwrap().get(&path) {
+              sx.send(()).unwrap();
+            }
           }
         }
       });

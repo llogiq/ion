@@ -112,7 +112,7 @@ fn convert_geometry(geo: &obj::Geometry, positions: &[obj::Vertex], normals: &[o
     let keys = try!(create_keys_from_primitive(prim));
 
     for key in keys {
-      match index_map.get(&key).map(|&i| i) {
+      match index_map.get(&key).cloned() {
         Some(index) => {
           // that triplet already exists; just append the index in the indices buffer
           indices.push(index);
@@ -208,7 +208,7 @@ fn guess_mode(prim: obj::Primitive) -> tessellation::Mode {
 ////      Err(TessellationError::Error)
 ////    }
 ////  }
-////  
+////
 ////  impl Deref for Tessellation {
 ////    type Target = gl33::Tessellation;
 ////

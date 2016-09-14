@@ -93,10 +93,6 @@ impl Device {
 
 impl Drop for Device {
   fn drop(&mut self) {
-    drop(&mut self.al_buffer);
-    drop(&mut self.al_source);
-    drop(&mut self.al_ctx);
-
     let dummy = unsafe { mem::uninitialized() };
     let _ = mem::replace(&mut self.al_device, dummy).close();
   }

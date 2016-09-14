@@ -155,7 +155,7 @@ fn cubic_hermite<T>(x: (T, Time), a: (T, Time), b: (T, Time), y: (T, Time), t: T
 
   // tangents
   let m0 = (b.0 - x.0) / (b.1 - x.1);
-	let m1 = (y.0 - a.0) / (y.1 - a.1);
+  let m1 = (y.0 - a.0) / (y.1 - a.1);
 
   a.0 * (two_t3 - three_t2 + 1.) + m0 * (t3 - 2. * t2 + t) + b.0 * (-two_t3 + three_t2) + m1 * (t3 - t2)
 }
@@ -170,15 +170,11 @@ pub struct Sampler {
 }
 
 impl Sampler {
-  pub fn new() -> Self {
-    Sampler {
-      cursor: 0
-    }
-  }
+  pub fn new() -> Self { Default::default() }
 
   /// Sample an animation `param` at `t`. If `random_sampling` is set, random sampling is generally
-	/// faster than continuous sampling. Though, if you use continuous sampling, set `random_sampling`
-	/// to `false` for max speed performance.
+  /// faster than continuous sampling. Though, if you use continuous sampling, set `random_sampling`
+  /// to `false` for max speed performance.
   pub fn sample<T>(&mut self, t: Time, param: &AnimParam<T>, random_sampling: bool) -> Option<T>
       where T: Interpolate {
     let i = if random_sampling {
